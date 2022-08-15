@@ -19,18 +19,18 @@ class Sudoku {
     }
   }
 
-  show(board = this.board) {
+  show() {
     for (let i = 0; i < 9; i++) {
       let rowAnswer = "";
       for (let j = 0; j < 9; j++) {
-        rowAnswer += board[i][j].value + " ";
+        rowAnswer += this.board[i][j].value + " ";
       }
       console.log(rowAnswer);
     }
   }
 
   refill() {
-    const sudoku = [
+    const easy = [
       [0, 0, 4, 0, 5, 0, 0, 0, 0],
       [9, 0, 0, 7, 3, 4, 6, 0, 0],
       [0, 0, 3, 0, 2, 1, 0, 4, 9],
@@ -42,9 +42,21 @@ class Sudoku {
       [0, 0, 0, 0, 6, 0, 1, 0, 0],
     ];
 
+    const medium = [
+      [0, 0, 5, 0, 0, 0, 0, 0, 0],
+      [7, 0, 4, 0, 9, 0, 0, 1, 2],
+      [0, 1, 0, 0, 0, 4, 3, 0, 0],
+      [5, 6, 0, 4, 0, 7, 0, 0, 3],
+      [0, 4, 0, 0, 1, 0, 0, 0, 0],
+      [0, 0, 0, 6, 8, 3, 5, 0, 0],
+      [9, 2, 0, 0, 7, 0, 0, 0, 5],
+      [0, 0, 0, 0, 0, 9, 2, 0, 6],
+      [0, 7, 3, 0, 0, 0, 9, 0, 0],
+    ];
+
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        this.board[i][j].value = sudoku[i][j];
+        this.board[i][j].value = medium[i][j];
       }
     }
   }
@@ -62,6 +74,11 @@ class Sudoku {
       return toRemove.indexOf(el) < 0;
     });
     // console.log("possibilities",cell.possibilities)
+  }
+
+  getPossibilities(row, column) {
+    console.log(this.board[row][column].possibilities)
+    return this.board[row][column].possibilities
   }
 
   colCheck(cell) {
@@ -99,14 +116,12 @@ class Sudoku {
   fillPossibilities(cell) {
     if (cell.possibilities.length === 1) {
       cell.value = cell.possibilities[0];
+      cell.possibilities = []
+      console.log(`filled ${cell.value} at ${cell.position.row}, ${cell.position.column}`);
     }
-  }
-
-  store() {
-    const store = this.board;
-    console.log("Store");
-    this.show(store);
-    return store;
+    if(cell.possibilities.length === 2) {
+      console.log(`possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`);
+    }
   }
 
   solve() {
@@ -119,7 +134,7 @@ class Sudoku {
         } else {
           // console.log("skipping", i, j);
         }
-        // console.log("final possibilities :", this.board[i][j].possibilities);
+        // console.log("final possibilities :", this.board[i][j].possibilities, "at ", i, j);
         this.fillPossibilities(this.board[i][j]);
       }
     }
@@ -137,11 +152,13 @@ class Sudoku {
           }
         }
       }
-      console.log("counter value", counter);
+      // console.log("counter value", counter);
       if (counter === 81) {
+        console.log("done");
         break;
       }
     }
+    console.log("Cannot find Solution")
   }
 }
 
@@ -161,5 +178,9 @@ class Cell {
 const s1 = new Sudoku();
 
 s1.refill();
-s1.fullSolve(20);
 s1.show();
+s1.solve()
+s1.fullSolve();
+s1.show();
+
+s1.getPossibilities(8,0)
