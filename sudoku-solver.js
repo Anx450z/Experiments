@@ -56,7 +56,7 @@ class Sudoku {
 
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        this.board[i][j].value = medium[i][j];
+        this.board[i][j].value = easy[i][j];
       }
     }
   }
@@ -77,8 +77,8 @@ class Sudoku {
   }
 
   getPossibilities(row, column) {
-    console.log(this.board[row][column].possibilities)
-    return this.board[row][column].possibilities
+    console.log(this.board[row][column].possibilities);
+    return this.board[row][column].possibilities;
   }
 
   colCheck(cell) {
@@ -116,11 +116,15 @@ class Sudoku {
   fillPossibilities(cell) {
     if (cell.possibilities.length === 1) {
       cell.value = cell.possibilities[0];
-      cell.possibilities = []
-      console.log(`filled ${cell.value} at ${cell.position.row}, ${cell.position.column}`);
+      cell.possibilities = [];
+      console.log(
+        `filled ${cell.value} at ${cell.position.row}, ${cell.position.column}`
+      );
     }
-    if(cell.possibilities.length === 2) {
-      console.log(`possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`);
+    if (cell.possibilities.length === 2) {
+      console.log(
+        `possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`
+      );
     }
   }
 
@@ -157,8 +161,10 @@ class Sudoku {
         console.log("done");
         break;
       }
+      if (i === itr-1) {
+        console.log("Cannot find Solution");
+      }
     }
-    console.log("Cannot find Solution")
   }
 }
 
@@ -170,7 +176,6 @@ class Cell {
     };
 
     this.possibilities = possibilities;
-
     this.value = value;
   }
 }
@@ -179,8 +184,6 @@ const s1 = new Sudoku();
 
 s1.refill();
 s1.show();
-s1.solve()
+s1.solve();
 s1.fullSolve();
 s1.show();
-
-s1.getPossibilities(8,0)
