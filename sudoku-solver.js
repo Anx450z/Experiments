@@ -121,11 +121,11 @@ class Sudoku {
         `filled ${cell.value} at ${cell.position.row}, ${cell.position.column}`
       );
     }
-    if (cell.possibilities.length === 2) {
-      console.log(
-        `possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`
-      );
-    }
+    // if (cell.possibilities.length === 2) {
+    //   console.log(
+    //     `possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`
+    //   );
+    // }
   }
 
   solve() {
@@ -157,12 +157,13 @@ class Sudoku {
         }
       }
       // console.log("counter value", counter);
+      if (!this.solve) {
+        console.log("did not fill any values");
+        break;
+      }
       if (counter === 81) {
         console.log("done");
         break;
-      }
-      if (i === itr-1) {
-        console.log("Cannot find Solution");
       }
     }
   }
@@ -184,6 +185,6 @@ const s1 = new Sudoku();
 
 s1.refill();
 s1.show();
-s1.solve();
+// s1.solve();
 s1.fullSolve();
 s1.show();
