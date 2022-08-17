@@ -1,7 +1,7 @@
 class Sudoku {
   constructor() {
     const possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+    this.guess = false;
     this.board = new Array(9).fill(-1);
 
     for (let i = 0; i < 9; i++) {
@@ -56,7 +56,7 @@ class Sudoku {
 
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        this.board[i][j].value = easy[i][j];
+        this.board[i][j].value = medium[i][j];
       }
     }
   }
@@ -120,15 +120,27 @@ class Sudoku {
       console.log(
         `filled ${cell.value} at ${cell.position.row}, ${cell.position.column}`
       );
+      return 1;
     }
-    // if (cell.possibilities.length === 2) {
-    //   console.log(
-    //     `possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`
-    //   );
-    // }
+    if (cell.possibilities.length === 2) {
+      // console.log(
+      //   `possible outcomes: ${cell.possibilities} at ${cell.position.row}, ${cell.position.column}`
+      // );
+      if (this.guess) {
+        cell.value = cell.possibilities[Math.floor(Math.random()*2)];
+        cell.possibilities = [];
+        console.log(
+          `guessed ${cell.value} at ${cell.position.row}, ${cell.position.column}`
+        );
+        this.guess = false;
+        return 1;
+      }
+    }
+    return 0;
   }
 
   solve() {
+    let fillCounter = 0;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         if (this.board[i][j].value === 0) {
@@ -139,16 +151,21 @@ class Sudoku {
           // console.log("skipping", i, j);
         }
         // console.log("final possibilities :", this.board[i][j].possibilities, "at ", i, j);
-        this.fillPossibilities(this.board[i][j]);
+        fillCounter += this.fillPossibilities(this.board[i][j]);
+        // console.log(this.fillPossibilities(this.board[i][j])) ;
       }
     }
+    return fillCounter;
   }
 
   fullSolve(itr = 81) {
     for (let i = 0; i < itr; i++) {
       let counter = 0;
       console.log(`Iteration ${i}`);
-      this.solve();
+      if (this.solve() === 0) {
+        console.log("Guessing solution");
+        this.guess = true;
+      }
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
           if (this.board[i][j].value !== 0) {
@@ -156,14 +173,12 @@ class Sudoku {
           }
         }
       }
-      // console.log("counter value", counter);
-      if (!this.solve) {
-        console.log("did not fill any values");
-        break;
-      }
       if (counter === 81) {
         console.log("done");
         break;
+      }
+      else{
+        console.log("solution not found");
       }
     }
   }
