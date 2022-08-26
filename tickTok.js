@@ -37,7 +37,18 @@ class Board {
   }
 }
 
+class Game{
+  constructor(){
+    this.board = new Board();
+    this.gameOver = false
+  }
 
-b1 = new Board()
+  play(){
+  
+  }
 
-b1.show()
+  getUserInput(){
+    
+  }
+}
+
