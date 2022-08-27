@@ -49,15 +49,28 @@ class Game extends Board{
     for(var i = 0; i < 9; i++) {
       if(this.gameOver) break
       this.getUserInput()
+      this.check()
       this.playNextMove()
     }
   
   }
 
+  checkVertical(){
+    console.log("checking vertical position")
+  }
+
+  checkHorizontal(){
+    console.log("checking horizontal")
+  }
+
+  checkDiagonal(){
+    console.log("checking diagonal position")
+  }
+
   getUserInput(){
     const inputX = Math.floor(Math.random() * 3);
     const inputY = Math.floor(Math.random() * 3);
-    if(inputX && inputY < 3){
+    if(inputX <3 && inputY < 3){
       console.log("entering the values")
       // console.log("this is the board: ",this.gameBoard.board[0][0].value)
       this.gameBoard.board[inputX][inputY].value = "X"
@@ -66,9 +79,19 @@ class Game extends Board{
     }
   }
 
+  calculateWinPossibilities(){
+    console.log("calculating winning possibilities")
+  }
+
   playNextMove(){
     console.log("playing next move")
-  }  
+  }
+  
+  check(){
+    this.checkVertical()
+    this.checkHorizontal()
+    this.checkDiagonal()
+  }
 }
 
 g1 = new Game()
