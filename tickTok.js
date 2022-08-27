@@ -85,6 +85,7 @@ class Game extends Board{
 
   playNextMove(){
     console.log("playing next move")
+    this.calculateWinPossibilities()
   }
   
   check(){
