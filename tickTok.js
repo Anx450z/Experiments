@@ -1,5 +1,5 @@
 class Cell {
-  constructor(position, possibility, value=-1) {
+  constructor(position, possibility=0, value = -1) {
     this.position = { x: -1, y: -1 };
     this.value = value;
     this.possibility = possibility;
@@ -8,7 +8,7 @@ class Cell {
 
 class Board {
   constructor() {
-    const possibilities = [1 / 3];
+    const possibilities = (0.33);
     this.board = new Array(3).fill(-1);
 
     for (var i = 0; i < 3; i++) {
@@ -37,65 +37,63 @@ class Board {
   }
 }
 
-class Game extends Board{
-  constructor(){
-    super()
+class Game extends Board {
+  constructor() {
+    super();
     this.gameBoard = new Board();
-    this.gameOver = false
+    this.gameOver = false;
   }
 
-  play(){
-
-    for(var i = 0; i < 9; i++) {
-      if(this.gameOver) break
-      this.getUserInput()
-      this.check()
-      this.playNextMove()
+  play() {
+    for (var i = 0; i < 9; i++) {
+      if (this.gameOver) break;
+      this.getUserInput();
+      this.check();
+      this.playNextMove();
     }
-  
   }
 
-  checkVertical(){
-    console.log("checking vertical position")
+  checkVertical() {
+    console.log("checking vertical position");
   }
 
-  checkHorizontal(){
-    console.log("checking horizontal")
+  checkHorizontal() {
+    console.log("checking horizontal");
   }
 
-  checkDiagonal(){
-    console.log("checking diagonal position")
+  checkDiagonal() {
+    console.log("checking diagonal position");
   }
 
-  getUserInput(){
+  getUserInput() {
     const inputX = Math.floor(Math.random() * 3);
     const inputY = Math.floor(Math.random() * 3);
-    if(inputX <3 && inputY < 3){
-      console.log("entering the values")
+    if (inputX < 3 && inputY < 3) {
+      console.log("entering the values");
       // console.log("this is the board: ",this.gameBoard.board[0][0].value)
-      this.gameBoard.board[inputX][inputY].value = "X"
-    }else{
-      console.log("wrong input value")
+      this.gameBoard.board[inputX][inputY].value = "X";
+    } else {
+      console.log("wrong input value");
     }
   }
 
-  calculateWinPossibilities(){
-    console.log("calculating winning possibilities")
+  calculateWinPossibilities() {
+    console.log("calculating winning possibilities");
   }
 
-  playNextMove(){
-    console.log("playing next move")
-    this.calculateWinPossibilities()
+  playNextMove() {
+    console.log("playing next move");
+    this.calculateWinPossibilities();
   }
-  
-  check(){
-    this.checkVertical()
-    this.checkHorizontal()
-    this.checkDiagonal()
+
+  check() {
+    this.checkVertical();
+    this.checkHorizontal();
+    this.checkDiagonal();
   }
 }
 
-g1 = new Game()
-g1.gameBoard.show()
-g1.play()
-g1.gameBoard.show()
+g1 = new Game();
+g1.gameBoard.show();
+g1.play();
+g1.gameBoard.show();
