@@ -55,10 +55,16 @@ class Game extends Board {
 
   checkVertical() {
     console.log("checking vertical position");
+
   }
 
   checkHorizontal() {
     console.log("checking horizontal");
+
+    for (var i = 0; i < 3; i++) {
+      const count = this.gameBoard.board[i].filter( item => item.value === 'X').length
+      console.log("count X :",count)
+    }
   }
 
   checkDiagonal() {
